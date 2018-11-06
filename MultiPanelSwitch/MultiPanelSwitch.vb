@@ -1,18 +1,18 @@
-﻿Public Class UserControl1
+﻿Public Class MultiPanelSwitch
     Const Pi As Double = Math.PI
     Dim x1, y1, x2, y2, x3, y3 As Integer
     Dim xp1, yp1, xp2, yp2 As Int32
-    Private m_lbltext As String
-    Private m_selectedPosition As Integer
+    Private m_lbltext As String = "Text"
+    Private m_selectedPosition As Integer = 0
     Private m_positions As Integer = 3
     Private m_WarningThreshold As Integer = 80
-    Private m_isLedVisible As Boolean = True
-    Private WarningActive As Boolean = False
+    Private m_isSemaphorVisible As Boolean
+    Private m_semaphorColor As Color
+    Private m_semaphorBrush As Brush = Brushes.White
     Dim centreX As Double = 32
     Dim centreY As Double = 44
     Dim apen As New Pen(Color.LightGray, 1)
     Dim lpen As New Pen(Color.Black, 2)
-    Dim tpen As New Pen(Color.Transparent, 2)
     Dim angle As Double = -3 / 4 * Pi
     Private Sub Me_click(sender As Object, e As EventArgs) Handles Me.Click
         m_selectedPosition += 1
@@ -29,6 +29,45 @@
         End If
         Me.Refresh()
     End Sub
+    Public Property isSemaphorVisible As Boolean
+        Get
+            isSemaphorVisible = m_isSemaphorVisible
+        End Get
+        Set(isSemaphorVisible As Boolean)
+            m_isSemaphorVisible = isSemaphorVisible
+            If isSemaphorVisible Then
+                Me.Height = 200
+            Else
+                Me.Height = 100
+            End If
+
+
+        End Set
+    End Property
+    Public Property semaphorColor As Color
+        Get
+            semaphorColor = m_semaphorColor
+        End Get
+        Set(semaphorColor As Color)
+            Select Case semaphorColor
+                Case Color.Red
+                    m_semaphorBrush = Brushes.Red
+                Case Color.Yellow
+                    m_semaphorBrush = Brushes.Yellow
+                Case Color.Green
+                    m_semaphorBrush = Brushes.Green
+                Case Color.Blue
+                    m_semaphorBrush = Brushes.Blue
+                Case Color.White
+                    m_semaphorBrush = Brushes.White
+                Case Else
+                    semaphorColor = m_semaphorColor
+                    Exit Property
+            End Select
+            m_semaphorColor = semaphorColor
+            Me.Refresh()
+        End Set
+    End Property
 
     Public Property positions As Integer
         Get
@@ -46,7 +85,7 @@
                 positions = m_positions
                 Exit Property
             End If
-
+            Me.Invalidate()
             Me.Refresh()
         End Set
     End Property
@@ -62,17 +101,10 @@
             Me.Refresh()
         End Set
     End Property
-    Public Property selectedPosition As Integer
+    Public ReadOnly Property selectedPosition As Integer
         Get
             selectedPosition = m_selectedPosition
         End Get
-        Set(selectedPosition As Integer)
-            If selectedPosition > m_positions Then
-                selectedPosition = 0
-                angle = -3 / 4 * Pi
-                m_selectedPosition = selectedPosition
-            End If
-        End Set
     End Property
     Private Sub GaugePaint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
@@ -99,19 +131,29 @@
 
             Dim tag As New Label
             With tag
-                .Size = New Size(8, 8)
+                .Size = New Size(16, 8)
                 .Font = New Font("SegoeUI", 5, FontStyle.Regular)
-                .Text = i.ToString
                 .Name = "tag" & i.ToString
             End With
+
+            If i = 0 Then
+                tag.Text = "Off"
+            ElseIf i = 1 And m_positions = 2 Then
+                tag.Text = "On"
+            ElseIf i = 1 And m_positions = 3 Then
+                tag.Text = "Aut"
+            ElseIf i = 2 Then
+                tag.Text = "On"
+            End If
+
             If i = 0 Then
                 tag.Location = New Point(x3, y3 - 4)
             ElseIf i = 1 And m_positions = 2 Then
-                tag.Location = New Point(x3 - 4, y3 - 4)
+                tag.Location = New Point(x3 - 8, y3 - 4)
             ElseIf i = 2 And m_positions = 3 Then
-                tag.Location = New Point(x3 - 4, y3 - 4)
+                tag.Location = New Point(x3 - 8, y3 - 4)
             ElseIf i = 1 And m_positions = 3 Then
-                tag.Location = New Point(x3 - 4, y3 - 1)
+                tag.Location = New Point(x3 - 6, y3 - 1)
             End If
 
             Me.Controls.Add(tag)
@@ -121,7 +163,13 @@
         e.Graphics.DrawRectangle(apen, 1, 78, 62, 21)
 
         drawswitch(e, angle)
+        lblSwitchTag.Text = lbltext
 
+        If isSemaphorVisible Then
+            e.Graphics.DrawEllipse(apen, 1, 113, 62, 62)
+            e.Graphics.DrawEllipse(lpen, 4, 116, 56, 56)
+            e.Graphics.FillEllipse(m_semaphorBrush, 6, 118, 52, 52)
+        End If
 
 
     End Sub

@@ -117,5 +117,17 @@
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\led-amber-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\led-blue-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\led-green-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\led-red-black.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
