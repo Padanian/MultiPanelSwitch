@@ -48,6 +48,15 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MultiGenPoint3TemperatureWeeklyStrip">
+      <HintPath>..\..\MultiGenPoint3TemperatureWeeklyStrip\MultiGenPoint3TemperatureWeeklyStrip\bin\Debug\MultiGenPoint3TemperatureWeeklyStrip.dll</HintPath>
+    </Reference>
+    <Reference Include="MultiGenPointCalendarStrip">
+      <HintPath>..\..\MultiGenPointCalendarStrip\MultiGenPointCalendarStrip\bin\Release\MultiGenPointCalendarStrip.dll</HintPath>
+    </Reference>
+    <Reference Include="MultiGenTemperatureIconLeft">
+      <HintPath>..\..\MultiGenTemperatureIconLeft\MultiGenTemperatureIconLeft\MultiGenTemperatureIconLeft\bin\Release\MultiGenTemperatureIconLeft.dll</HintPath>
+    </Reference>
     <Reference Include="MultiPanelSwitch">
       <HintPath>..\MultiPanelSwitch\bin\Debug\MultiPanelSwitch.dll</HintPath>
     </Reference>
