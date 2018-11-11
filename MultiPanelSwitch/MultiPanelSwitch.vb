@@ -21,7 +21,7 @@
 
 
 
-    Private Sub Me_click(sender As Object, e As EventArgs) Handles Me.Click
+    Private Sub Me_click(sender As Object, e As EventArgs) Handles pbSwitch.Click
         m_selectedPosition += 1
         If m_selectedPosition > m_positions - 1 Then
             m_selectedPosition = 0
@@ -146,6 +146,8 @@
         ' La chiamata è richiesta dalla finestra di progettazione.
         InitializeComponent()
 
+        'AddHandler pbSwitch.Click, AddressOf Me_click
+
         ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
         AddHandler blinkingSemaphorTimer.Tick, AddressOf blinkingSemaphor
         With pbSemaphor
@@ -172,8 +174,8 @@
     End Sub
     Private Sub GaugePaint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
-        e.Graphics.DrawEllipse(apen, 1, 13, 62, 62)
-        e.Graphics.DrawEllipse(lpen, 4, 16, 56, 56)
+
+        drawswitch(e, angle)
 
         Dim m_step As Double
         If m_positions = 2 Then
@@ -182,55 +184,9 @@
             m_step = Pi / 4
         End If
 
-        Dim i As Integer
-        For num As Double = -3 / 4 * Pi To -1 / 4 * Pi Step m_step
-            x1 = Convert.ToInt32(30 * Math.Cos(num) + centreX)
-            y1 = Convert.ToInt32(30 * Math.Sin(num) + centreY)
-            x2 = Convert.ToInt32(36 * Math.Cos(num) + centreX)
-            y2 = Convert.ToInt32(36 * Math.Sin(num) + centreY)
-            x3 = Convert.ToInt32(42 * Math.Cos(num) + centreX)
-            y3 = Convert.ToInt32(42 * Math.Sin(num) + centreY)
-
-            e.Graphics.DrawLine(lpen, x1, y1, x2, y2)
-
-            Dim ca As Control() = Me.Controls.Find("tag" & i.ToString, True)
-            If ca.Length = 0 Then
-                Dim tag As New Label
-                With tag
-                    .Size = New Size(16, 8)
-                    .Font = New Font("SegoeUI", 5, FontStyle.Regular)
-                    .Name = "tag" & i.ToString
-                End With
-                If i = 0 Then
-                    tag.Text = "Off"
-                ElseIf i = 1 And m_positions = 2 Then
-                    tag.Text = "On"
-                ElseIf i = 1 And m_positions = 3 Then
-                    tag.Text = "Aut"
-                ElseIf i = 2 Then
-                    tag.Text = "On"
-                End If
-
-                If i = 0 Then
-                    tag.Location = New Point(x3, y3 - 4)
-                ElseIf i = 1 And m_positions = 2 Then
-                    tag.Location = New Point(x3 - 8, y3 - 4)
-                ElseIf i = 2 And m_positions = 3 Then
-                    tag.Location = New Point(x3 - 8, y3 - 4)
-                ElseIf i = 1 And m_positions = 3 Then
-                    tag.Location = New Point(x3 - 6, y3 - 1)
-                End If
-
-                Me.Controls.Add(tag)
-
-            End If
-
-            i += 1
-        Next
 
         e.Graphics.DrawRectangle(apen, 1, 78, 62, 21)
 
-        drawswitch(e, angle)
         lblSwitchTag.Text = lbltext
 
 
@@ -296,56 +252,18 @@
     End Sub
 
     Public Sub drawswitch(e, angle)
-        'prima linea
-        Dim num As Double = angle - 0.075
-        x1 = Convert.ToInt32(22 * Math.Cos(num) + centreX)
-        y1 = Convert.ToInt32(22 * Math.Sin(num) + centreY)
 
-        num = angle + 0.075
-        x2 = Convert.ToInt32(22 * Math.Cos(num) + centreX)
-        y2 = Convert.ToInt32(22 * Math.Sin(num) + centreY)
-
-        Dim startNotchX As Int32 = (x1 + x2) / 2
-        Dim startNotchY As Int32 = (y1 + y2) / 2
-
-        num = angle
-        Dim endNotchX = Convert.ToInt32(12 * Math.Cos(num) + centreX)
-        Dim endNotchY = Convert.ToInt32(12 * Math.Sin(num) + centreY)
-
-
-        e.Graphics.DrawLine(lpen, x1, y1, x2, y2)
-        e.Graphics.DrawLine(lpen, startNotchX, startNotchY, endNotchX, endNotchY)
-
-        'seconda linea
-        x1 = x2
-        y1 = y2
-
-        num = angle + Pi - 0.075
-        x2 = Convert.ToInt32(22 * Math.Cos(num) + centreX)
-        y2 = Convert.ToInt32(22 * Math.Sin(num) + centreY)
-
-        e.Graphics.DrawLine(lpen, x1, y1, x2, y2)
-
-        'terza linea
-        x1 = x2
-        y1 = y2
-
-        num = angle + Pi + 0.075
-        x2 = Convert.ToInt32(22 * Math.Cos(num) + centreX)
-        y2 = Convert.ToInt32(22 * Math.Sin(num) + centreY)
-
-        e.Graphics.DrawLine(lpen, x1, y1, x2, y2)
-
-        'quarta linea
-        x1 = x2
-        y1 = y2
-
-        num = angle - 0.075
-
-        x2 = Convert.ToInt32(22 * Math.Cos(num) + centreX)
-        y2 = Convert.ToInt32(22 * Math.Sin(num) + centreY)
-
-        e.Graphics.DrawLine(lpen, x1, y1, x2, y2)
+        If angle = -3 / 4 * Pi And m_positions = 3 Then
+            pbSwitch.Image = My.Resources.PanelSwitchOff
+        ElseIf angle = -3 / 4 * Pi And m_positions = 2 Then
+            pbSwitch.Image = My.Resources.PanelSwitchOff_2pos
+        ElseIf angle = -1 / 2 * Pi Then
+            pbSwitch.Image = My.Resources.PanelSwitchAuto
+        ElseIf angle = -1 / 4 * Pi And m_positions = 3 Then
+            pbSwitch.Image = My.Resources.PanelSwitchOn
+        ElseIf angle = -1 / 4 * Pi And m_positions = 2 Then
+            pbSwitch.Image = My.Resources.PanelSwitchOn_2pos
+        End If
 
     End Sub
 End Class

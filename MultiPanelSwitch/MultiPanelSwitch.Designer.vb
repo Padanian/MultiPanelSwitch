@@ -23,6 +23,8 @@ Partial Class MultiPanelSwitch
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.lblSwitchTag = New System.Windows.Forms.Label()
+        Me.pbSwitch = New System.Windows.Forms.PictureBox()
+        CType(Me.pbSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblSwitchTag
@@ -34,17 +36,30 @@ Partial Class MultiPanelSwitch
         Me.lblSwitchTag.Text = "Label1"
         Me.lblSwitchTag.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'pbSwitch
+        '
+        Me.pbSwitch.Image = Global.MultiPanelSwitch.My.Resources.Resources.PanelSwitchOff
+        Me.pbSwitch.Location = New System.Drawing.Point(0, 0)
+        Me.pbSwitch.Name = "pbSwitch"
+        Me.pbSwitch.Size = New System.Drawing.Size(64, 64)
+        Me.pbSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbSwitch.TabIndex = 1
+        Me.pbSwitch.TabStop = False
+        '
         'MultiPanelSwitch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.lblSwitchTag)
+        Me.Controls.Add(Me.pbSwitch)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "MultiPanelSwitch"
         Me.Size = New System.Drawing.Size(64, 100)
+        CType(Me.pbSwitch, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents lblSwitchTag As Label
+    Friend WithEvents pbSwitch As PictureBox
 End Class

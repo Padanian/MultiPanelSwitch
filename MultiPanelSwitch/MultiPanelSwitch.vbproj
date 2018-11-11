@@ -131,6 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\led-off-black.png" />
+    <None Include="Resources\PanelSwitchOn-2pos.png" />
+    <None Include="Resources\PanelSwitchOff-2pos.png" />
+    <None Include="Resources\PanelSwitchOn.png" />
+    <None Include="Resources\PanelSwitchOff.png" />
+    <None Include="Resources\PanelSwitchAuto.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
