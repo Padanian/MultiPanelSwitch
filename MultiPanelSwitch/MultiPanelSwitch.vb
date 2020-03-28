@@ -250,7 +250,6 @@
         End If
 
     End Sub
-
     Public Sub drawswitch(e, angle)
 
         If angle = -3 / 4 * Pi And m_positions = 3 Then

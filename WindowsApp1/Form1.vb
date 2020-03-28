@@ -2,16 +2,13 @@
     Dim i As Integer
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        If i Mod 2 = 0 Then
-            MultiPanelSwitch4.semaphorColor = Color.Red
-            MultiPanelSwitch4.isSemaphorVisible = True
-            MultiPanelSwitch4.isSemaphorBlinking = True
-        Else
+        If MultiPanelSwitch4.semaphorColor = Color.Red Then
             MultiPanelSwitch4.semaphorColor = Color.Black
-            MultiPanelSwitch4.isSemaphorVisible = True
-            MultiPanelSwitch4.isSemaphorBlinking = False
+        Else
+            MultiPanelSwitch4.semaphorColor = Color.Red
         End If
-        i += 1
+
+        MultiPanelSwitch4.isSemaphorBlinking = Not MultiPanelSwitch4.isSemaphorBlinking
 
 
     End Sub
